@@ -139,7 +139,7 @@ function load_csv($lines)
                     // 'image' => ($attach_id != null && $attach_id != 0) ? $attach_id : '',
                 );
                 // The function to be run
-                $variation_id = create_product_variation($id, $variation_data);
+                $variation_id = create_product_variations($id, $variation_data);
                 // update ACFs
                 $res = update_field('barcode', $children['barcode'], $id);
                 $res = update_field('model', $children['model'], $id);
@@ -383,7 +383,7 @@ function create_product_variables($data)
  * @since 3.0.0
  */
 
-function create_product_variation($product_id, $variation_data)
+function create_product_variations($product_id, $variation_data)
 {
     // Get the Variable product object (parent)
     $product = wc_get_product($product_id);
