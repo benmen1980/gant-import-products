@@ -48,6 +48,7 @@ function load_csv($lines)
             'stock' => 'Y',
             'variation' => [],
             'regular_price' => $price,
+            'parent_category' => $data[15],
             'categories' => [
                 $data[19]
             ]
@@ -72,6 +73,7 @@ function load_csv($lines)
             'concept' => $data[16],
             'cut' => $data[17],
             'sub_cat' => $data[19],
+            'cat' => $data[15],
             'fabric' => $data[20],
             'fabric_desc' => $data[21],
             'made_in' => $data[22],
@@ -117,6 +119,7 @@ function load_csv($lines)
                 'tax_class' => '', // optional
                 'weight' => '', // optional
                 // For NEW attributes/values use NAMES (not slugs)
+                'parent_category'  => $parent['parent_category'],
                 'attributes' => $parent['attributes'],
                 'categories' => $parent['categories'],
                 // 'tags' => $parent['tags'],
@@ -276,7 +279,21 @@ function create_product_variable($data)
                     'parent'=> term_exists( 'Category A', 'category' )['term_id']
                 ));
             // add parent cat
-            $parent_name = 'אביזרים';
+            $parent_name = $data['parent_category'];
+            if (term_exists($parent_name)) {
+            } else {
+                if (!empty($parent_name)) {
+                   $parent_cat =  wp_insert_term(
+                    // the name of the category
+                        $parent_name,
+                        // the taxonomy 'category' (don't change)
+                        'product_cat',
+                        array(
+                            // what to use in the url for term archive
+                            'slug' => $parent_name
+                        ));
+                }
+            }
             $res = set_parent_cat($parent_name,$category);
 
         }
