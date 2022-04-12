@@ -106,7 +106,7 @@ function load_csv($lines)
     }
     if ($parents) {
         foreach ($parents as $sku_parent => $parent) {
-            $id = create_product_variable(array(
+            $id = create_product_variables(array(
                 'author' => '', // optional
                 'title' => $parent['title'],
                 'content' => '',
@@ -168,7 +168,7 @@ function load_csv($lines)
 
 }
 
-function create_product_variable($data)
+function create_product_variables($data)
 {
 
     $postname = sanitize_title($data['title']);
